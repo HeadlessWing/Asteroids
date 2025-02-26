@@ -3,6 +3,9 @@ from constants import *
 from circleshape import *
 from player import *
 
+updateable = pygame.sprite.Group()
+drawable = pygame.sprite.Group()
+Player.containers = (updateable, drawable)
 
 def main():
     pygame.init
@@ -17,8 +20,10 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
-        player.update(dt)
-        player.draw(screen)
+        updateable.update(dt)
+        for object in drawable:
+            object.draw(screen)
+
         pygame.display.flip()
         #limits framerate to 60 fps
         dt = clock.tick(60) / 1000
